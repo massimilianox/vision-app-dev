@@ -8,8 +8,15 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class CameraVC: UIViewController {
 
+    @IBOutlet weak var captureImageView: UIImageView!
+    @IBOutlet weak var flashBtn: UIButton!
+    @IBOutlet weak var recognizedObjLbl: UILabel!
+    @IBOutlet weak var identificationLbl: UILabel!
+    @IBOutlet weak var cameraView: UIView!
+    @IBOutlet weak var outputView: RoundedShadowView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
