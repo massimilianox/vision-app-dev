@@ -73,10 +73,14 @@
                                     <action selector="flashBtnPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GlC-9C-hyJ"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="ypi-Mc-433">
+                                <rect key="frame" x="300" y="568.5" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="M1O-7y-QSD" secondAttribute="bottom" constant="20" id="4hw-Fo-piS"/>
+                            <constraint firstItem="ypi-Mc-433" firstAttribute="centerY" secondItem="M1O-7y-QSD" secondAttribute="centerY" id="84N-NB-r34"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="OB6-Oe-6yp" secondAttribute="trailing" constant="8" id="8OH-iO-RbS"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="nvt-ED-cNJ" secondAttribute="bottom" constant="20" id="MIX-qh-Mef"/>
                             <constraint firstItem="nvt-ED-cNJ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="Mrr-Zi-S4Q"/>
@@ -84,6 +88,7 @@
                             <constraint firstItem="sZA-uA-5Qc" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="SKN-OO-0y3"/>
                             <constraint firstItem="OB6-Oe-6yp" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="46" id="UBf-Ko-ead"/>
                             <constraint firstItem="OB6-Oe-6yp" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="ZWv-D6-hKL"/>
+                            <constraint firstItem="ypi-Mc-433" firstAttribute="centerX" secondItem="M1O-7y-QSD" secondAttribute="centerX" id="fcC-r0-Xga"/>
                             <constraint firstItem="sZA-uA-5Qc" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="nU8-cI-jT6"/>
                             <constraint firstItem="sZA-uA-5Qc" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="qbi-Rd-5C7"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="M1O-7y-QSD" secondAttribute="trailing" constant="20" id="uIE-9q-6h4"/>
@@ -91,6 +96,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="activityMonitor" destination="ypi-Mc-433" id="BpW-6R-VqG"/>
                         <outlet property="cameraView" destination="sZA-uA-5Qc" id="wUk-aS-BTC"/>
                         <outlet property="captureImageView" destination="M1O-7y-QSD" id="SFH-Rb-APa"/>
                         <outlet property="flashBtn" destination="nvt-ED-cNJ" id="yd2-hU-A4F"/>

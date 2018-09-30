@@ -16,7 +16,7 @@ enum FlashState {
     case off
 }
 
-class CameraVC: UIViewController, AVCapturePhotoCaptureDelegate {
+class CameraVC: UIViewController, AVCapturePhotoCaptureDelegate, AVSpeechSynthesizerDelegate {
 
     var captureSession: AVCaptureSession!
     var captureOutput: AVCapturePhotoOutput!
@@ -25,12 +25,15 @@ class CameraVC: UIViewController, AVCapturePhotoCaptureDelegate {
     
     var flashControlState: FlashState = .off
     
+    var speechSythesizer = AVSpeechSynthesizer()
+    
     @IBOutlet weak var captureImageView: UIImageView!
     @IBOutlet weak var flashBtn: UIButton!
     @IBOutlet weak var recognizedObjLbl: UILabel!
     @IBOutlet weak var identificationLbl: UILabel!
     @IBOutlet weak var cameraView: UIView!
     @IBOutlet weak var outputView: RoundedShadowView!
+    @IBOutlet weak var activityMonitor: UIActivityIndicatorView!
     
     @IBAction func flashBtnPressed(_ sender: Any) {
         switch flashControlState {
@@ -47,13 +50,13 @@ class CameraVC: UIViewController, AVCapturePhotoCaptureDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        activityMonitor.isHidden = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
         previewLayer.frame = cameraView.bounds
+        speechSythesizer.delegate = self
     }
 
     
@@ -92,6 +95,7 @@ class CameraVC: UIViewController, AVCapturePhotoCaptureDelegate {
         }
     }
     
+    // AVCapturePhotoCaptureDelegate
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
         if error != nil {
             debugPrint(error as Any)
@@ -107,12 +111,18 @@ class CameraVC: UIViewController, AVCapturePhotoCaptureDelegate {
                     
                     for classification in results {
                         if classification.confidence < 0.5 {
-                            self.identificationLbl.text = "I am not sure what it is, please try again"
+                            let unknownObjMessage = "I am not sure what it is, please try again"
+                            self.identificationLbl.text = unknownObjMessage
                             self.recognizedObjLbl.text = ""
+                            self.synthesizeSpeech(fromString: unknownObjMessage)
                             break
                         } else {
-                            self.identificationLbl.text = classification.identifier
-                            self.recognizedObjLbl.text = "Confidence: \(Int(classification.confidence * 100))"
+                            let identification = classification.identifier
+                            let confidence = Int(classification.confidence * 100)
+                            self.identificationLbl.text = identification
+                            self.recognizedObjLbl.text = "Confidence: \(confidence)"
+                            let completesentence = "I think this is a \(identification). I am \(confidence)% sure"
+                            self.synthesizeSpeech(fromString: completesentence)
                             break
                         }
                     }
@@ -128,13 +138,25 @@ class CameraVC: UIViewController, AVCapturePhotoCaptureDelegate {
         }
     }
     
+    // AVSpeechSynthesizerDelegate
+    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
+        cameraView.isUserInteractionEnabled = true
+        activityMonitor.isHidden = true
+        activityMonitor.stopAnimating()
+    }
+    
+    func synthesizeSpeech(fromString string: String) {
+        let speechUtterance = AVSpeechUtterance(string: string)
+        speechSythesizer.speak(speechUtterance)
+    }
+    
     @objc func didTapCameraView() {
+        
+        cameraView.isUserInteractionEnabled = false
+        activityMonitor.isHidden = false
+        activityMonitor.startAnimating()
+        
         let settings = AVCapturePhotoSettings()
-        
-//        let previewPixelType = settings.availablePreviewPhotoPixelFormatTypes.first!
-//        let previewFormat = [kCVPixelBufferPixelFormatTypeKey as String: previewPixelType, kCVPixelBufferWidthKey as String: 160, kCVPixelBufferHeightKey as String: 160]
-//        settings.previewPhotoFormat = previewFormat as? [String : Any]
-        
         settings.previewPhotoFormat = settings.embeddedThumbnailPhotoFormat
         
         if flashControlState == .off {
@@ -144,7 +166,6 @@ class CameraVC: UIViewController, AVCapturePhotoCaptureDelegate {
         }
         
         captureOutput.capturePhoto(with: settings, delegate: self)
-        
     }
 
 }
