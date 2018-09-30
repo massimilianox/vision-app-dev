@@ -9,11 +9,12 @@
 import UIKit
 import AVFoundation
 
-class CameraVC: UIViewController {
+class CameraVC: UIViewController, AVCapturePhotoCaptureDelegate {
 
     var captureSession: AVCaptureSession!
     var captureOutput: AVCapturePhotoOutput!
     var previewLayer: AVCaptureVideoPreviewLayer!
+    var photoData: Data?
     
     @IBOutlet weak var captureImageView: UIImageView!
     @IBOutlet weak var flashBtn: UIButton!
@@ -35,6 +36,11 @@ class CameraVC: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(didTapCameraView))
+        tap.numberOfTapsRequired = 1
+        
+        
         captureSession = AVCaptureSession()
         captureSession.sessionPreset = AVCaptureSession.Preset.hd1920x1080
         
@@ -55,11 +61,35 @@ class CameraVC: UIViewController {
                 previewLayer.connection?.videoOrientation = AVCaptureVideoOrientation.portrait
                 
                 cameraView.layer.addSublayer(previewLayer)
+                cameraView.addGestureRecognizer(tap)
                 captureSession.startRunning()
             }
         } catch {
             debugPrint(error)
         }
+    }
+    
+    func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
+        if error != nil {
+            debugPrint(error as Any)
+        } else {
+            photoData = photo.fileDataRepresentation()
+            let image = UIImage(data: photoData!)
+            captureImageView.image = image
+            
+            print("Process photo end");
+        }
+    }
+    
+    @objc func didTapCameraView() {
+        let settings = AVCapturePhotoSettings()
+        let previewPixelType = settings.availablePreviewPhotoPixelFormatTypes.first!
+        let previewFormat = [kCVPixelBufferPixelFormatTypeKey as String: previewPixelType, kCVPixelBufferWidthKey as String: 160, kCVPixelBufferHeightKey as String: 160]
+        
+        settings.previewPhotoFormat = previewFormat as? [String : Any]
+        
+        captureOutput.capturePhoto(with: settings, delegate: self)
+        
     }
 
 }

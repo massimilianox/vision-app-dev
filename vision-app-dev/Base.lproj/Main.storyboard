@@ -19,33 +19,7 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sZA-uA-5Qc">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="M1O-7y-QSD">
-                                        <rect key="frame" x="265" y="510" width="90" height="137"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="137" id="756-0b-z3D"/>
-                                            <constraint firstAttribute="width" constant="90" id="Z4i-Hh-AVU"/>
-                                        </constraints>
-                                    </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nvt-ED-cNJ">
-                                        <rect key="frame" x="20" y="617" width="116" height="30"/>
-                                        <color key="backgroundColor" white="0.29999999999999999" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="116" id="IjM-6K-lK4"/>
-                                            <constraint firstAttribute="height" constant="30" id="fWb-rd-yXx"/>
-                                        </constraints>
-                                        <state key="normal" title="FLASH OFF">
-                                            <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
-                                    </button>
-                                </subviews>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="nvt-ED-cNJ" secondAttribute="bottom" constant="20" id="CQR-dY-RaE"/>
-                                    <constraint firstAttribute="trailing" secondItem="M1O-7y-QSD" secondAttribute="trailing" constant="20" id="FFE-Ur-YCL"/>
-                                    <constraint firstAttribute="bottom" secondItem="M1O-7y-QSD" secondAttribute="bottom" constant="20" id="rgZ-sV-P3l"/>
-                                    <constraint firstItem="nvt-ED-cNJ" firstAttribute="leading" secondItem="sZA-uA-5Qc" secondAttribute="leading" constant="20" id="xtz-N4-lK5"/>
-                                </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OB6-Oe-6yp" customClass="RoundedShadowView" customModule="vision_app_dev" customModuleProvider="target">
                                 <rect key="frame" x="8" y="66" width="359" height="75"/>
@@ -78,16 +52,38 @@
                                     <constraint firstAttribute="bottom" secondItem="oo3-Fm-BGq" secondAttribute="bottom" constant="8" id="iA2-qN-kfM"/>
                                 </constraints>
                             </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="M1O-7y-QSD">
+                                <rect key="frame" x="265" y="510" width="90" height="137"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="90" id="2vl-Px-9UW"/>
+                                    <constraint firstAttribute="height" constant="137" id="3l0-iR-VKb"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nvt-ED-cNJ">
+                                <rect key="frame" x="20" y="617" width="116" height="30"/>
+                                <color key="backgroundColor" white="0.29999999999999999" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="116" id="Wag-mJ-fke"/>
+                                    <constraint firstAttribute="height" constant="30" id="npM-mt-sZh"/>
+                                </constraints>
+                                <state key="normal" title="FLASH OFF">
+                                    <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="M1O-7y-QSD" secondAttribute="bottom" constant="20" id="4hw-Fo-piS"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="OB6-Oe-6yp" secondAttribute="trailing" constant="8" id="8OH-iO-RbS"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="nvt-ED-cNJ" secondAttribute="bottom" constant="20" id="MIX-qh-Mef"/>
+                            <constraint firstItem="nvt-ED-cNJ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="Mrr-Zi-S4Q"/>
                             <constraint firstItem="sZA-uA-5Qc" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="N3P-PP-zud"/>
                             <constraint firstItem="sZA-uA-5Qc" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="SKN-OO-0y3"/>
                             <constraint firstItem="OB6-Oe-6yp" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="46" id="UBf-Ko-ead"/>
                             <constraint firstItem="OB6-Oe-6yp" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="ZWv-D6-hKL"/>
                             <constraint firstItem="sZA-uA-5Qc" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="nU8-cI-jT6"/>
                             <constraint firstItem="sZA-uA-5Qc" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="qbi-Rd-5C7"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="M1O-7y-QSD" secondAttribute="trailing" constant="20" id="uIE-9q-6h4"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
