@@ -8,6 +8,8 @@
 
 import UIKit
 import AVFoundation
+import CoreML
+import Vision
 
 class CameraVC: UIViewController, AVCapturePhotoCaptureDelegate {
 
@@ -77,16 +79,42 @@ class CameraVC: UIViewController, AVCapturePhotoCaptureDelegate {
             let image = UIImage(data: photoData!)
             captureImageView.image = image
             
+            do {
+                let model = try VNCoreMLModel(for: SqueezeNet().model )
+                let request = VNCoreMLRequest(model: model) { (request, error) in
+                    guard let results = request.results as? [VNClassificationObservation] else { return }
+                    
+                    for classification in results {
+                        if classification.confidence < 0.5 {
+                            self.identificationLbl.text = "I am not sure what it is, please try again"
+                            self.recognizedObjLbl.text = ""
+                            break
+                        } else {
+                            self.identificationLbl.text = classification.identifier
+                            self.recognizedObjLbl.text = "Confidence: \(Int(classification.confidence * 100))"
+                            break
+                        }
+                    }
+                    
+                }
+                let handler = VNImageRequestHandler(data: photoData!)
+                try handler.perform([request])
+            } catch {
+                debugPrint(error)
+            }
+            
             print("Process photo end");
         }
     }
     
     @objc func didTapCameraView() {
         let settings = AVCapturePhotoSettings()
-        let previewPixelType = settings.availablePreviewPhotoPixelFormatTypes.first!
-        let previewFormat = [kCVPixelBufferPixelFormatTypeKey as String: previewPixelType, kCVPixelBufferWidthKey as String: 160, kCVPixelBufferHeightKey as String: 160]
         
-        settings.previewPhotoFormat = previewFormat as? [String : Any]
+//        let previewPixelType = settings.availablePreviewPhotoPixelFormatTypes.first!
+//        let previewFormat = [kCVPixelBufferPixelFormatTypeKey as String: previewPixelType, kCVPixelBufferWidthKey as String: 160, kCVPixelBufferHeightKey as String: 160]
+//        settings.previewPhotoFormat = previewFormat as? [String : Any]
+        
+        settings.previewPhotoFormat = settings.embeddedThumbnailPhotoFormat
         
         captureOutput.capturePhoto(with: settings, delegate: self)
         
